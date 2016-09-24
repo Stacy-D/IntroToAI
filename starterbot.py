@@ -2,10 +2,11 @@
 import os
 import time
 import random
+import re
 from slackclient import SlackClient
 # starterbot's ID as an environment variable
-BOT_ID='to be replaced'
-SLACK_BOT_TOKEN='to be replaced'
+BOT_ID='U2AAVP8HH'
+SLACK_BOT_TOKEN='xoxb-78369790595-rVp55HVoKFzBSlL312SFyaJE'
 BOT_NAME = 'dr.hannibal'
 # constants
 AT_BOT = "<@" + BOT_ID + ">"
@@ -18,7 +19,7 @@ CONTEXT_3 = ["problem"]
 CONTEXT_4 = ["mother","father","brother","sister","children","husband","wife","mate","family"]
 CONTEXT_5 = ["love", "relationsip", "boyfriend", "girlfriend"]
 CONTEXT_6 = ["conflict"]
-CONTEXT_7 = ["yes", "yep", "don`t know"]
+CONTEXT_7 = ["yes", "yep", "don`t know", "no", "nope"]
 CONTEXT_8 = ["advice", "to do"]
 CONTEXT_9 = ["Bye", "See you soon", "Thank you", "Good bye"]
 
@@ -53,7 +54,6 @@ REPLY_4 = ["Most problems usually come from your childhood. Tell me about your f
             "Have you noticed this before?",
             "How long have you got this problem?",
             "Why did you decide to solve this problem now?"]
-REPLY_4 = ["Most problems usually come from your childhood. Tell me about your family."]
 REPLY_5 = ["Most problems usually come from your childhood. Tell me about your family.",
             "I am ready to listen to you.",
             "Tell me more about it.",
@@ -127,7 +127,7 @@ def handle_command(command, channel):
 
 def check_input(command, replies):
     for reply in replies:
-        if reply in command:
+        if re.search(reply,command) or re.search(reply.lower(),command) or re.search(reply.upper(),command):
             return True
     return False
 def parse_slack_output(slack_rtm_output):
