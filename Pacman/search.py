@@ -1,7 +1,8 @@
 # search.py
 # ---------
 import util
-
+from util import euclidean_distance
+import math
 
 def depth_first_search(problem):
     frontier = util.Stack()
@@ -48,7 +49,19 @@ def search_graph(problem, frontier):
     return None
 
 
+def a_star_search(problem, heuristic=nullHeuristic):
+    cost = lambda aPath: problem.get_cost_of_actions([x[1] for x in aPath]) + heuristic(aPath[len(aPath)-1][0], problem)
+    return search_graph(problem, util.PriorityQueueWithFunction(cost))
+
+
+def best_first_search(problem):
+    cost = lambda aPath: euclidean_distance(aPath[len(aPath)-1][0], problem.goal)
+    return search_graph(problem, util.PriorityQueueWithFunction(cost))
+
+
 # Abbreviations
 bfs = breadth_first_search
 dfs = depth_first_search
 ucs = uniform_cost_search
+best = best_first_search
+astar = a_star_search
